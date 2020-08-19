@@ -62,17 +62,12 @@ public class Linked {
             } else
                 nodeTemp = nodeTemp.next;
         }
-        ListNode nodeTemp1 = node;
-        while (nodeTemp1.next != null) {
-            nodeTemp1 = nodeTemp1.next;
-        }
-
         if (temp1 != null) {
-            setList(temp1, nodeTemp1);
+            setList(temp1, nodeTemp);
         }
 
         if (temp2 != null) {
-            setList(temp2, nodeTemp1);
+            setList(temp2, nodeTemp);
         }
 
         return node;
