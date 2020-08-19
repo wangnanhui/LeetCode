@@ -27,6 +27,7 @@ public class BstBuild {
 		return build(0, hight - 1);
 	}
 
+	//获取树的总高度
 	public static int getHight(Node node) {
 
 		if (node == null)
@@ -40,6 +41,10 @@ public class BstBuild {
 		return hight;
 	}
 
+	//二叉树构建  使用中序遍历的思想 + 分治
+	//先构建左边 然后中间 最后右边
+	//前提是 链表是有序的
+	//时间复杂度 o(n) + log (n) 搜索的时间复杂度
 	public static BstNode build(int left, int right) {
 		if (left > right)
 			return null;
@@ -47,7 +52,7 @@ public class BstBuild {
 		BstNode bRoot = new BstNode();
 		bRoot.left = build(left, mid - 1);
 		bRoot.val = root.val;
-		root = root.next;
+		root = root.next;//第一个应该是最左边的节点 
 		bRoot.right = build(mid + 1, right);
 
 		return bRoot;
@@ -68,6 +73,9 @@ public class BstBuild {
 		printTree(bNode.right);
 	}
 
+	//判断一棵树是不是平衡的
+	//思想是 : 分别找这个树每个的左树和右树的高度差 如果超过1 就返回一个状态  最后判断这个状态即可
+	//时间复杂度是 o(n) 遍历一遍树就行
 	public static boolean isBalance(BstNode bNode) {
 		if (bNode == null)
 			return true;
