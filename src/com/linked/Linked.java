@@ -4,7 +4,7 @@ public class Linked {
     public static void main(String[] args) {
         Linked linked = new Linked();
         int arr2[] = {9, 9, 9, 9, 9};
-        int arr[] = {2,1,4,3,5,5,7,10,9};
+        int arr[] = {1,2,3,4,5,6,7,8,9};
         ListNode n1 = new ListNode(arr[0]);
         ListNode n2 = new ListNode(arr2[0]);
 
@@ -20,8 +20,9 @@ public class Linked {
             n2Temp = n2Temp.next;
         }
 
-
-       ListNode node =  linked.oddEvenList(n1);
+        linked.printNode(n1);
+        linked.removeNthFromEnd(n1, 5);
+        ListNode node = linked.oddEvenList(n1);
 
         linked.printNode(node);
 
@@ -117,9 +118,10 @@ public class Linked {
     //看了解答才知知道  只是奇数位置的数在左边 偶数位置树在右边
     //等于给两个链表分别存奇数和偶数的链表
     //然后最后一个奇数位置指向偶数链表就行
-    public ListNode oddEvenList(ListNode head){
+    public ListNode oddEvenList(ListNode head) {
 
-        if (head == null) return null;
+        if (head == null)
+            return null;
         ListNode odd = head,
                 even = head.next,
                 evenHead = even;
@@ -131,9 +133,48 @@ public class Linked {
         }
         odd.next = evenHead;
         printNode(head);
+
+
         return head;
     }
 
+    //
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+
+        ListNode h = new ListNode(0);
+        h.next = head;
+        if (head == null)
+            return null;
+        ListNode temp = h.next;
+        ListNode pre = h;
+        int i = 1;
+        while (i < n && temp != null) {
+            if (temp.next == null) {
+                pre.next = null;
+                break;
+            }
+            pre = temp;
+            temp = temp.next;
+            if (temp != null)
+                i++;
+            else
+                break;
+
+        }
+        if (temp == null) {
+
+            return h.next;
+
+        } else {
+
+            ListNode tempNext = temp.next;
+            pre.next = tempNext;
+
+        }
+        printNode(h.next);
+        return h.next;
+
+    }
 
 }
 
