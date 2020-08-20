@@ -4,7 +4,7 @@ public class Linked {
     public static void main(String[] args) {
         Linked linked = new Linked();
         int arr2[] = {9, 9, 9, 9, 9};
-        int arr[] = {1};
+        int arr[] = {2,1,4,3,5,5,7,10,9};
         ListNode n1 = new ListNode(arr[0]);
         ListNode n2 = new ListNode(arr2[0]);
 
@@ -20,6 +20,10 @@ public class Linked {
             n2Temp = n2Temp.next;
         }
 
+
+       ListNode node =  linked.oddEvenList(n1);
+
+        linked.printNode(node);
 
         linked.printNode(n1);
         linked.printNode(n2);
@@ -108,6 +112,28 @@ public class Linked {
         }
 
     }
+
+    //被leetcode的解释带歪了  以为奇数数值放奇数位 偶数数值放偶数位
+    //看了解答才知知道  只是奇数位置的数在左边 偶数位置树在右边
+    //等于给两个链表分别存奇数和偶数的链表
+    //然后最后一个奇数位置指向偶数链表就行
+    public ListNode oddEvenList(ListNode head){
+
+        if (head == null) return null;
+        ListNode odd = head,
+                even = head.next,
+                evenHead = even;
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        printNode(head);
+        return head;
+    }
+
 
 }
 
