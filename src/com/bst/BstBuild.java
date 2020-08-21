@@ -17,6 +17,9 @@ public class BstBuild {
 		printNode(node);
 		System.out.println();
 		BstNode bNode = getTree(node);
+		int min = getMinNumberTree(bNode);
+		System.out.println(min);
+
 		printTree(bNode);
 		System.out.println(isBalance(bNode));
 	}
@@ -93,6 +96,34 @@ public class BstBuild {
 		return Math.max(lHight, rHight) + 1;
 
 	}
+
+	//获取 二叉树，找出其最小深度。
+	//最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+	//深度优先遍历
+	public static int getMinNumberTree(BstNode root){
+		int min = Integer.MAX_VALUE ;
+		if(root == null)
+			return 0 ;
+		if(root.left == null  && root.right == null){
+			return 1 ;
+		}
+		if(root.left != null){
+			min = Math.min(getMinNumberTree(root.left),min);
+		}
+		if(root.right != null){
+
+			min = Math.min(getMinNumberTree(root.right),min);
+
+		}
+		return min + 1 ;
+
+
+
+	}
+
+
+
+
 
 }
 
