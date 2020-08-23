@@ -1,5 +1,7 @@
 package com.linked;
 
+import java.util.List;
+
 public class Linked {
     public static void main(String[] args) {
         Linked linked = new Linked();
@@ -7,6 +9,7 @@ public class Linked {
         int arr[] = {1,2,3,4,5,6,7,8,9};
         ListNode n1 = new ListNode(arr[0]);
         ListNode n2 = new ListNode(arr2[0]);
+
 
 
         ListNode n1Temp = n1;
@@ -19,6 +22,10 @@ public class Linked {
             n2Temp.next = new ListNode(arr2[i]);
             n2Temp = n2Temp.next;
         }
+
+        ListNode  mergeNode = linked.mergeTwoLists(n1,n2);
+
+        linked.printNode(mergeNode);
 
         linked.printNode(n1);
         linked.removeNthFromEnd(n1, 5);
@@ -118,6 +125,7 @@ public class Linked {
     //看了解答才知知道  只是奇数位置的数在左边 偶数位置树在右边
     //等于给两个链表分别存奇数和偶数的链表
     //然后最后一个奇数位置指向偶数链表就行
+    //更简单的办法就是  设置一个临时变量 i 初始为0   链表每next一次 加一 判断i的奇偶性 然后放到奇偶链表立 最后合并
     public ListNode oddEvenList(ListNode head) {
 
         if (head == null)
@@ -138,7 +146,7 @@ public class Linked {
         return head;
     }
 
-    //
+    //移除正数第n个节点
     public ListNode removeNthFromEnd(ListNode head, int n) {
 
         ListNode h = new ListNode(0);
@@ -175,6 +183,44 @@ public class Linked {
         return h.next;
 
     }
+    //合并两个有序链表
+    //定一个新的链表用来存放最后结果
+    //判断l1 和 l2 当前节点大小   哪个小放在前面 然后小的指针向下移动
+    //最后把非空的l1 或者 l2 放在tempNode的后面
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null )
+            return l2;
+        if(l2 == null)
+            return l1 ;
+
+
+        ListNode  ll = new ListNode(0);
+        ListNode llTemp = ll ;
+        while(true){
+            if(l1 == null || l2  == null)
+                break;
+            if(l1.val >= l2.val){
+                llTemp.next = l2 ;
+                l2 = l2.next  ;
+            }else{
+                llTemp.next = l1;
+                l1  = l1.next;
+            }
+            llTemp = llTemp.next ;
+
+        }
+
+        if(l1 !=  null)
+            llTemp.next = l1 ;
+        if(l2 !=null)
+            llTemp.next = l2 ;
+        return ll.next;
+
+
+
+    }
+
+
 
 }
 
