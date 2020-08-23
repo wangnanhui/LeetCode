@@ -23,6 +23,10 @@ public class Linked {
             n2Temp = n2Temp.next;
         }
 
+
+        ListNode swap = linked.swapPairs(n1);
+        linked.printNode(swap);
+
         ListNode  mergeNode = linked.mergeTwoLists(n1,n2);
 
         linked.printNode(mergeNode);
@@ -218,6 +222,32 @@ public class Linked {
 
 
 
+    }
+    //两两相交换
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null)
+            return head ;
+        ListNode swapTemp = new ListNode(0);
+        ListNode swap = swapTemp;
+
+        ListNode temp = head ;
+        ListNode nextTemp = head.next ;
+        while(temp !=  null && nextTemp != null){
+            swap.next = new ListNode(nextTemp.val) ;
+            swap = swap.next;
+            swap.next  = new ListNode(temp.val) ;
+            swap = swap.next ;
+
+            nextTemp = nextTemp.next ;
+            temp = nextTemp ;
+            if(nextTemp ==null)
+                break ;
+            nextTemp = temp.next ;
+        }
+        if(temp != null){
+            swap.next = temp ;
+        }
+        return swapTemp.next ;
     }
 
 
