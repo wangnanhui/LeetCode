@@ -1,12 +1,13 @@
 package com.linked;
 
+import java.time.temporal.Temporal;
 import java.util.List;
 
 public class Linked {
     public static void main(String[] args) {
         Linked linked = new Linked();
         int arr2[] = {9, 9, 9, 9, 9};
-        int arr[] = {1,2,3,4,5,6,7,8,9};
+        int arr[] = {1,2,3,4,5,6,7,8,9,10};
         ListNode n1 = new ListNode(arr[0]);
         ListNode n2 = new ListNode(arr2[0]);
 
@@ -23,9 +24,19 @@ public class Linked {
             n2Temp = n2Temp.next;
         }
 
-
+        System.out.println("交换-------");
         ListNode swap = linked.swapPairs(n1);
         linked.printNode(swap);
+        System.out.println("反转-------");
+
+
+
+       ListNode reverseNode =  linked.reverseKNode(swap,3);
+
+       linked.printNode(reverseNode);
+
+        System.out.println("------");
+
 
         ListNode  mergeNode = linked.mergeTwoLists(n1,n2);
 
@@ -248,6 +259,123 @@ public class Linked {
             swap.next = temp ;
         }
         return swapTemp.next ;
+    }
+
+    //k组 链表反转
+    //思想是 把链表分成 size / k 组  反转每一组  最后拼接一下
+    //
+    public ListNode reverseKNode(ListNode list , int k ){
+        if(list == null || k == 0 ||  k == 1)
+            return list ;
+
+
+        ListNode hTemp = list ;
+        int length = 0 ;
+
+        while(hTemp != null){
+            length ++;
+            hTemp = hTemp.next ;
+        }
+
+        int count = length  / k ;
+
+        ListNode [] lists = new ListNode[count];
+        int s = k ;
+
+
+        ListNode pre = null ;
+        ListNode curr = list ;
+        while(true){
+            ListNode temp = curr.next ;
+            curr.next = pre ;
+            pre = curr ;
+            curr = temp ;
+            k -- ;
+            if(k== 0 ){
+                lists[count - 1] = pre ;
+                count --;
+                pre = null ;
+                k = s ;
+                if(count == 0)
+                    break;
+            }
+        }
+        ListNode node = null ;
+        ListNode temp = null ;
+        for (int i = lists.length - 1; i >= 0 ; i--) {
+            if(node == null){
+                node = lists[i] ;
+                temp = node ;
+                while(temp.next != null)
+                    temp = temp.next ;
+            }else{
+                temp.next = lists[i] ;
+                while(temp.next != null)
+                    temp = temp.next ;
+            }
+
+
+        }
+        if(curr != null)
+            temp.next = curr  ;
+        return  node;
+
+
+    }
+
+
+
+    //单链表 反转
+    //思想是 head - > A -> B -> C -> D -> E
+    //第一次
+
+    //  current = A -> B -> C -> D -> E
+    //  tmp = B -> C -> D  -> E
+    //  pre = head
+
+    //第二次
+    //  pre = A -> head
+    // current = B -> C -> D ->  E
+    // temp = C -> D -> E
+
+    //第三次
+
+    //pre  = B -> A -> head
+    //current = C -> D ->  E
+    //tmp = D -> E
+
+    //第四次
+
+    //pre = C -> B -> A ->head
+    //current = D  -> E
+    //tmp = E
+
+    //第五次
+
+    //pre = D -> C -> B -> A -> head
+    //current = E ;
+    //tmp  = null ;
+
+
+    //第六次
+    //pre = E  -> D -> B ->A ->head
+    //current = null 跳出
+
+    // 每次让当前节点的下一个节点指向当前的节点的前一个节点（或者说链表 ）
+    // 然后 当前节点和前一个节点往后移动
+    public ListNode reverseListNode(ListNode head ){
+        if(head  == null)
+            return  head ;
+
+        ListNode pre  = null ;
+        ListNode current = head ;
+        while(current != null){
+            ListNode tmp = current.next ;
+            current.next  = pre ;
+            pre  = current ;
+            current  = tmp ;
+        }
+        return pre ;
     }
 
 
