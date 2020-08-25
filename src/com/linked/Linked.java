@@ -7,7 +7,8 @@ public class Linked {
     public static void main(String[] args) {
         Linked linked = new Linked();
         int arr2[] = {9, 9, 9, 9, 9};
-        int arr[] = {1,2,3,4,5,6,7,8,9,10};
+        int arr[] = {1,2,3,4,5,4,3,2,1};
+
         ListNode n1 = new ListNode(arr[0]);
         ListNode n2 = new ListNode(arr2[0]);
 
@@ -24,6 +25,11 @@ public class Linked {
             n2Temp = n2Temp.next;
         }
 
+
+
+        linked.isPalindrome(n1);
+
+
         System.out.println("交换-------");
         ListNode swap = linked.swapPairs(n1);
         linked.printNode(swap);
@@ -37,6 +43,10 @@ public class Linked {
 
         System.out.println("------");
 
+
+        ListNode reverseBetween = linked.reverseBetween(reverseNode , 2,6) ;
+        linked.printNode(reverseBetween);
+        System.out.println();
 
         ListNode  mergeNode = linked.mergeTwoLists(n1,n2);
 
@@ -378,6 +388,72 @@ public class Linked {
         return pre ;
     }
 
+    //判断是否为回文链表
+    //思想 定义 快慢指针 然后反转一半链表  然后和另一半链表比较
+   public boolean  isPalindrome(ListNode head ){
+
+        ListNode fast = head ;
+        ListNode slow = head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next ;
+        }
+
+        ListNode pre = reverseListNode(slow) ;
+
+       while(pre != null && head != null ){
+           if( pre.val != head.val){
+               break;
+           }
+           pre = pre.next ;
+           head = head.next;
+       }
+       return pre == null  ;
+
+   }
+
+
+
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head == null )
+            return head ;
+        int start = 1 ;
+        ListNode pre = null ;
+        ListNode current  = head ;
+        ListNode rtemp = head ;
+        while(current != null){
+            if(start >= m && start <= n ){
+                ListNode temp = current.next ;
+                current.next = pre ;
+                pre = current ;
+                current = temp ;
+                start ++ ;
+                if(current == null)
+                    break ;
+            }else{
+                if(start >= m)
+                    break ;
+                // pre = current ;
+                rtemp = rtemp.next ;
+                current = current.next ;
+
+                start ++ ;
+            }
+
+        }
+        ListNode pTemp = pre ;
+        if(current != null){
+            while(pTemp.next != null)
+                pTemp = pTemp.next ;
+            pTemp.next = current ;
+        }
+
+
+        rtemp.next = pre ;
+        return head ;
+
+
+    }
 
 
 }
