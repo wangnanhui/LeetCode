@@ -7,7 +7,7 @@ public class Linked {
     public static void main(String[] args) {
         Linked linked = new Linked();
         int arr2[] = {9, 9, 9, 9, 9};
-        int arr[] = {1,2,3,4,5,4,3,2,1};
+        int arr[] = {1,2,3,4,5,4,3,2,9,9,9,9,9};
 
         ListNode n1 = new ListNode(arr[0]);
         ListNode n2 = new ListNode(arr2[0]);
@@ -24,6 +24,12 @@ public class Linked {
             n2Temp.next = new ListNode(arr2[i]);
             n2Temp = n2Temp.next;
         }
+
+        ListNode postFix = linked.getSamePostfix(n1,n2);
+        System.out.println(postFix == null);
+        linked.printNode(postFix);
+
+
 
 
 
@@ -295,7 +301,7 @@ public class Linked {
 
         ListNode pre = null ;
         ListNode curr = list ;
-        while(true){
+        while(curr != null ){
             ListNode temp = curr.next ;
             curr.next = pre ;
             pre = curr ;
@@ -454,6 +460,33 @@ public class Linked {
 
 
     }
+
+
+
+    public ListNode getSamePostfix(ListNode n1 , ListNode n2 ){
+        ListNode pre1 = reverseListNode(n1);
+        ListNode pre2 = reverseListNode(n2) ;
+        ListNode node = new ListNode(0);
+        ListNode temp = node ;
+        while(pre1 != null && pre2 != null){
+            if(pre1.val != pre2.val){
+                break;
+            }else{
+                temp.next = new ListNode(pre1.val);
+                temp = temp.next;
+                pre1 = pre1.next ;
+                pre2 = pre2.next ;
+            }
+        }
+        return node.next;
+
+    }
+
+
+
+
+
+
 
 
 }

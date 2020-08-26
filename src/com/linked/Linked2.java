@@ -13,6 +13,7 @@ public class Linked2 {
         while (temp.next != null){
             temp = temp.next ;
         }
+
         temp.next = node2.next.next ;
 
        ListNode2   detectCycle =  linked2.detectCycle(node2) ;
@@ -20,6 +21,9 @@ public class Linked2 {
 
 
     }
+
+
+
 
 
     public ListNode2 creatNode(int [] arr){
