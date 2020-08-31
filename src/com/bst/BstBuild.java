@@ -116,11 +116,34 @@ public class BstBuild {
 
 		}
 		return min + 1 ;
-
-
-
 	}
 
+
+	//给定一个二叉树，它的每个结点都存放着一个整数值。
+	//
+	//找出路径和等于给定数值的路径总数。
+	//
+	//路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。
+
+	//思路 ： 从根节点往下遍历  使用sum-root.val 判断
+	//比如 sum为8 当前节点为 5  那么下个节点只要等于3就行 如果想等 count+1 ，然后分辨遍历左边和右边
+	public int getPath(BstNode root , int  sum ){
+		if(root == null)
+			return 0;
+		return  paths(root,sum) + getPath(root.left,sum)+getPath(root.right,sum);
+	}
+	public int paths(BstNode root , int sum ){
+		if(root == null)
+			return 0 ;
+		int res =  0 ;
+		if(sum == root.val){
+			res += 1 ;
+		}
+		res += paths(root.left , sum - root.val);
+		res += paths(root.right,sum-root.val);
+
+		return res ;
+	}
 
 
 
